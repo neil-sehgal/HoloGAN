@@ -23,6 +23,8 @@ International Conference on Computer Vision (ICCV) 2019
 
 CelebA:  http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html 
 
+**NOTE FROM NEIL: Used CS147 download.py script to get data**
+
 LSUN: Dataset and pre-process code  https://github.com/fyu/lsun 
 
 ShapeNet Chair: https://drive.google.com/file/d/18GXkDR5Fro8KCldYCcmJXoCEY9iunPME/view?usp=sharing
@@ -35,8 +37,10 @@ Cats: Dataset and pre-process code https://github.com/AlexiaJM/RelativisticGAN/t
 
 - To run the training of HoloGAN
 
+**NOTE FROM NEIL: Changed .jpg to *.jpg**
+
 ```	
-python main.py ./config_HoloGAN.json --dataset celebA --input_fname_pattern ".jpg" --crop input_height 108--output_height 64
+python main.py ./config_HoloGAN.json --dataset celebA --input_fname_pattern "*.jpg" --crop input_height 108--output_height 64
 ```
 Help with config_HoloGAN.json
 
