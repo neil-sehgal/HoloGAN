@@ -24,6 +24,10 @@ International Conference on Computer Vision (ICCV) 2019
 CelebA:  http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html 
 
 **NOTE FROM NEIL: Used CS147 download.py script to get data**
+After running pytyon3 download.py
+run this:
+tar -xvzf celebA.tar.gz
+
 
 LSUN: Dataset and pre-process code  https://github.com/fyu/lsun 
 
