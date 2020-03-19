@@ -27,6 +27,7 @@ CelebA:  http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 After running pytyon3 download.py
 run this:
 tar -xvzf celebA.tar.gz
+Then run preprocess_celebA to remove greyscale images from dataset to ensure all are shape (64,64,3)
 
 
 LSUN: Dataset and pre-process code  https://github.com/fyu/lsun 
