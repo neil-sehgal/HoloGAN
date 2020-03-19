@@ -2,3 +2,10 @@
 .idea/
 
 __pycache__/
+
+data/
+
+HoloGAN/
+
+holoVenv/
+.vscode/settings.json
