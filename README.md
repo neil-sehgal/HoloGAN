@@ -30,6 +30,12 @@ tar -xvzf celebA.tar.gz
 Then run preprocess_celebA to remove greyscale images from dataset to ensure all are shape (64,64,3)
 
 
+VKitti:
+First mkdir vKitti in /data directory
+Then run getVKittiImages.py
+It will tightly crop all vKitti cars with a 5px border and resize all to be 108*108 (may have to change resize shape)
+
+
 LSUN: Dataset and pre-process code  https://github.com/fyu/lsun 
 
 ShapeNet Chair: https://drive.google.com/file/d/18GXkDR5Fro8KCldYCcmJXoCEY9iunPME/view?usp=sharing
