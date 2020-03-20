@@ -48,11 +48,17 @@ Cats: Dataset and pre-process code https://github.com/AlexiaJM/RelativisticGAN/t
 
 - To run the training of HoloGAN
 
-**NOTE FROM NEIL: Changed .jpg to *.jpg**
+**NOTE FROM NEIL: Changed ".jpg" to "*.jpg"**
+**Make sure to change the output_dir in config file to not overlap with other runs**
+**Also remember to change image_path, leave other things the same**
+
 
 ```	
 python main.py ./config_HoloGAN.json --dataset celebA --input_fname_pattern "*.jpg" --crop input_height 108--output_height 64
 ```
+
+**NOTE FROM NEIL: REMEMBER TO CHANGE image_path, gpu, azi_low and azi_high, and output_dir each time!!**
+
 Help with config_HoloGAN.json
 
 ```
