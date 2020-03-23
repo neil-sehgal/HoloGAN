@@ -58,6 +58,8 @@ python main.py ./config_HoloGAN.json --dataset celebA --input_fname_pattern "*.j
 ```
 
 **NOTE FROM NEIL: REMEMBER TO CHANGE image_path, gpu, azi_low and azi_high, and output_dir each time!!**
+**REMEMBER TO ALTER INPUT_HEIGHT IN MAIN.py**
+**CHECK SUPPLEMENTAL HOLOGAN PAPER FOR AZIMUTH AND ELEVATION VALUES TO USE**
 
 Help with config_HoloGAN.json
 

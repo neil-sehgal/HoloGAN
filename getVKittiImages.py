@@ -5,7 +5,7 @@ import random
 from operator import itemgetter
 
 def get_crop_coordinates(image, box):
-    """Just gets tight crop with buffer of 5 px"""
+    """Gets tight crop with buffer of 5 px"""
     x1 = box[0]-5
     x2 = box[2]+5
     y1 = box[1]-5
@@ -29,11 +29,43 @@ def get_crop_coordinates(image, box):
 
     return x1, x2, y1, y2
 
+def get_square(image, box):
+    """Makes square around car"""
+    x1 = box[0]
+    x2 = box[2]
+    y1 = box[1]
+    y2 = box[3]
+
+    width = x2-x1
+    height = y2-y1
+    buf_y = int((width-height)/2)
+    y1 = y1-buf_y
+    y2 = y2 + buf_y
+
+    shape = np.shape(image)
+
+    # Address out of bounds issues
+    if x1 < 0:
+        x2 -= x1
+        x1 = 0
+    if x2 >= shape[1]:
+        x1 -= x2 - shape[1]
+        x2 = shape[1]
+    if y1 < 0:
+        y2 -= y1
+        y1 = 0
+    if y2 >= shape[0]:
+        y1 -= y2 - shape[0]
+        y2 = shape[0]
+
+    return x1, x2, y1, y2
+
 folder = '/data/jhtlab/rzhang73/KITTI/vkitti_mask_data/train/car'
 images = '/data/jhtlab/rzhang73/KITTI/vkitti_1.3.1_rgb/'
 poses_dict = {}
-# dirs = set()
 num = 0
+
+numCarsSeen = 0
 for file in os.listdir(folder):
     # print(file)``
     if num % 500 == 0:
@@ -46,11 +78,8 @@ for file in os.listdir(folder):
     variation = anns['variation']
 
     poses = anns['poses']
-
     boxes = anns['bbxes']
-    # print(anns['world'])
-    # print(anns['variation'])
-    # print(anns['frame'])
+    
     for i in range(len(poses)):
         pose = poses[i]
         box = boxes[i]
@@ -64,6 +93,10 @@ for file in os.listdir(folder):
 
         
         x1, x2, y1, y2 = get_crop_coordinates(im, box)
+
+        #USE THIS FOR GETTING SQUARE AROUND CAR RATHER THAN TIGHT CROP
+        # x1, x2, y1, y2 = get_square(im, box)
+
         cropped_im = im[y1:y2, x1:x2, :]
 
         #RESHAPES ALL IMAGES TO 108x108
@@ -89,72 +122,9 @@ for file in os.listdir(folder):
         pose = str(pose)
 
 
-        cv2.imwrite('./data/vKitti/' + pose + '#' + str(counter) + '.jpg', cropped_im)
+        cv2.imwrite('./data/vKitti_crop/' + pose + '#' + str(counter) + '_' + str(numCarsSeen) + '.jpg', cropped_im)
+        # cv2.imwrite('./data/vKitti_no_crop/' + pose + '#' + str(counter) + '_' + str(numCarsSeen) + '.jpg', cropped_im)
+
+        numCarsSeen += 1
 
 
-
-
-# def get_crop_coordinates_old(image, boxj, box_size=None,
-#                          translate=True):
-#     """
-#     Returns the coordinates (x1, y1) and (x2, y2) that represents
-#     where the images should be cropped to have a square image
-#     with the object in question.
-
-#     The coordinates form a square image, centered on the object.
-#     Args:
-#         image (2d array): image in question
-#         boxj ([1, 4] array): bounding box of object
-#         box_size (int): by default, the size of the crop box is
-#             randomized for data augmentation. When box_size is
-#             specified, the box size will be fixed.
-#         translation (bool): by default, the box will be translated
-#             by self.augment_translate for data augmentation.
-#             When translate is False, this will be disabled.
-#     """
-
-#     # Compute how large the cropped image should be
-#     if box_size is None:
-#         box_size = int(max(boxj[3] - boxj[1], boxj[2] - boxj[0]))
-#         box_size = \
-#             int(min(max(box_size * 2, 128 * 1.2),
-#                     375))
-#         box_size = random.randrange(box_size, 376)
-
-#     # Compute x, y coordinates in the image to serve as the box center.
-#     # Offset the center so that the object is not always in the center
-#     # (for data augmentation purposes)
-#     box_center_x = (boxj[0] + boxj[2]) / 2
-#     box_center_y = (boxj[1] + boxj[3]) / 2
-#     if translate:
-#         translation_offset = .5 * box_size / 2
-#         box_center_x = int(random.uniform(
-#             box_center_x - translation_offset,
-#             box_center_x + translation_offset))
-#         box_center_y = int(random.uniform(
-#             box_center_y - translation_offset,
-#             box_center_y + translation_offset))
-
-#     # Compute (x1, y1) and (x2, y2)
-#     x1 = int(box_center_x - (box_size / 2))
-#     x2 = int(box_center_x + (box_size / 2))
-#     y1 = int(box_center_y - (box_size / 2))
-#     y2 = int(box_center_y + (box_size / 2))
-
-#     shape = np.shape(image)
-
-#     # Address out of bounds issues
-#     if x1 < 0:
-#         x2 -= x1
-#         x1 = 0
-#     if x2 >= shape[1]:
-#         x1 -= x2 - shape[1]
-#         x2 = shape[1]
-#     if y1 < 0:
-#         y2 -= y1
-#         y1 = 0
-#     if y2 >= shape[0]:
-#         y1 -= y2 - shape[0]
-#         y2 = shape[0]
-
-#     return x1, x2, y1, y2
